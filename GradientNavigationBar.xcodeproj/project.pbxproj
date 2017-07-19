@@ -15,6 +15,8 @@
 		2F8867531F1F9DB0006609F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F8867511F1F9DB0006609F5 /* LaunchScreen.storyboard */; };
 		2F88675E1F1F9DB0006609F5 /* GradientNavigationBarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F88675D1F1F9DB0006609F5 /* GradientNavigationBarTests.m */; };
 		2F8867691F1F9DB0006609F5 /* GradientNavigationBarUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8867681F1F9DB0006609F5 /* GradientNavigationBarUITests.m */; };
+		2F8867781F1F9FB0006609F5 /* YHHNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8867771F1F9FB0006609F5 /* YHHNavigationController.m */; };
+		2F88677B1F1FAC2E006609F5 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F88677A1F1FAC2E006609F5 /* NSObject+Runtime.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,10 @@
 		2F8867641F1F9DB0006609F5 /* GradientNavigationBarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GradientNavigationBarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F8867681F1F9DB0006609F5 /* GradientNavigationBarUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientNavigationBarUITests.m; sourceTree = "<group>"; };
 		2F88676A1F1F9DB0006609F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F8867761F1F9FB0006609F5 /* YHHNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHHNavigationController.h; sourceTree = "<group>"; };
+		2F8867771F1F9FB0006609F5 /* YHHNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHHNavigationController.m; sourceTree = "<group>"; };
+		2F8867791F1FAC2E006609F5 /* NSObject+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Runtime.h"; sourceTree = "<group>"; };
+		2F88677A1F1FAC2E006609F5 /* NSObject+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,8 @@
 			children = (
 				2F8867461F1F9DB0006609F5 /* AppDelegate.h */,
 				2F8867471F1F9DB0006609F5 /* AppDelegate.m */,
+				2F8867761F1F9FB0006609F5 /* YHHNavigationController.h */,
+				2F8867771F1F9FB0006609F5 /* YHHNavigationController.m */,
 				2F8867491F1F9DB0006609F5 /* ViewController.h */,
 				2F88674A1F1F9DB0006609F5 /* ViewController.m */,
 				2F88674C1F1F9DB0006609F5 /* Main.storyboard */,
@@ -110,6 +118,8 @@
 				2F8867511F1F9DB0006609F5 /* LaunchScreen.storyboard */,
 				2F8867541F1F9DB0006609F5 /* Info.plist */,
 				2F8867431F1F9DB0006609F5 /* Supporting Files */,
+				2F8867791F1FAC2E006609F5 /* NSObject+Runtime.h */,
+				2F88677A1F1FAC2E006609F5 /* NSObject+Runtime.m */,
 			);
 			path = GradientNavigationBar;
 			sourceTree = "<group>";
@@ -274,6 +284,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F88674B1F1F9DB0006609F5 /* ViewController.m in Sources */,
+				2F88677B1F1FAC2E006609F5 /* NSObject+Runtime.m in Sources */,
+				2F8867781F1F9FB0006609F5 /* YHHNavigationController.m in Sources */,
 				2F8867481F1F9DB0006609F5 /* AppDelegate.m in Sources */,
 				2F8867451F1F9DB0006609F5 /* main.m in Sources */,
 			);
