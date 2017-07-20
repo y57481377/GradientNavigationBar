@@ -12,4 +12,6 @@
 - (NSArray *)getAllMethods;
 
 - (NSArray *)getAllProperties;
+
+- (NSArray *)getAllIvars;
 @end

@@ -1,14 +1,13 @@
 //
-//  ViewController.h
+//  UINavigationController+GestureBack.h
 //  GradientNavigationBar
 //
-//  Created by YANG on 2017/7/19.
+//  Created by Yang on 2017/7/20.
 //  Copyright © 2017年 洪海 杨. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface UINavigationController (GestureBack)
 
 @end
-

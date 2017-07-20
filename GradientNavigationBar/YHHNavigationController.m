@@ -7,8 +7,9 @@
 //
 
 #import "YHHNavigationController.h"
+#import "UINavigationController+GestureBack.h"
+#import "UIViewController+alpha.h"
 #import "NSObject+Runtime.h"
-#import <objc/runtime.h>
 
 @interface YHHNavigationController ()
 
@@ -20,18 +21,38 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    SEL sysSEl = NSSelectorFromString(@"_updateInteractiveTransition");
-    SEL mySEL = NSSelectorFromString(@"yhh_updateInteractiveTransition");
-    Method sysMethod = class_getInstanceMethod([self class], sysSEl);
-    Method myMethod = class_getInstanceMethod([self class], mySEL);
-    method_exchangeImplementations(sysMethod, myMethod);
     
     NSArray *methodArr = [self.superclass getAllMethods];
-    
     NSLog(@"%@",methodArr);
+}
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    [self setNavigationBarAlpha:viewController.navAlpha];
+    [super pushViewController:viewController animated:animated];
+}
+
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated {
+    UIViewController *vc = [super popViewControllerAnimated:animated];
+    [self setNavigationBarAlpha:vc.navAlpha];
+    return vc;
+}
+
+- (NSArray<UIViewController *> *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    return [super popToViewController:viewController animated:animated];
+}
+
+- (void)setNavigationBarAlpha:(CGFloat)alpha {
+    UIView *backView = self.navigationBar.subviews[0];
     
-    NSArray *properties = [self.superclass getAllProperties];
-    NSLog(@"%@", properties);
+    UIView *shadow = [backView valueForKey:@"_shadowView"];
+    if (shadow) {
+        shadow.alpha = alpha;
+    }
+    
+    UIView *effectView = [backView valueForKey:@"_backgroundEffectView"];
+    if (effectView) {
+        effectView.alpha = alpha;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,13 +60,4 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 @end

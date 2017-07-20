@@ -14,29 +14,34 @@
     unsigned int count = 0;
     Method *list = class_copyMethodList([self class], &count);
     
-    NSMutableArray *muArr = [NSMutableArray array];
+    NSMutableArray *methodArray = [NSMutableArray array];
     for (int i = 0; i < count; i++) {
         Method method = list[i];
         
         SEL name = method_getName(method);
         unsigned int params = method_getNumberOfArguments(method);
+        
+        const char *encode = method_getTypeEncoding(method);
+        
         char type;
         size_t len = 0;
         method_getReturnType(method, &type, len);
+        
         const char *name_c = sel_getName(name);
         
-        NSString *str = [NSString stringWithFormat:@"Method-%s,----*****---%d,\\n编码--%c\\n", name_c, params, type];
-        [muArr addObject:str];
+        
+        NSString *str = [NSString stringWithFormat:@"方法名：%s, 参数个数:%d, 返回类型：%c, 参数类型: %s", name_c, params, type, encode];
+        [methodArray addObject:str];
     }
     
     free(list);
     
-    return muArr;
+    return methodArray;
 }
 
 - (NSArray *)getAllProperties
 {
-    unsigned int count;
+    unsigned int count = 0;
     //获取属性的链表
     objc_property_t *properties  =class_copyPropertyList([self class], &count);
     
@@ -52,5 +57,25 @@
     free(properties);
     
     return propertiesArray;
+}
+
+- (NSArray *)getAllIvars {
+    
+    unsigned int count = 0;
+
+    NSMutableArray *ivarArray = [NSMutableArray array];
+    
+    Ivar *ivars = class_copyIvarList([self class], &count);
+    
+    for (int i = 0; i< count; i++) {
+        Ivar ivar = ivars[i];
+        
+        const char *name = ivar_getName(ivar);
+        const char *encode = ivar_getTypeEncoding(ivar);
+        NSString *str = [NSString stringWithFormat:@"%s, %s", name, encode];
+        
+        [ivarArray addObject:str];
+    }
+    return ivarArray;
 }
 @end
