@@ -14,7 +14,8 @@
 
 @end
 
-const CGFloat limit = 100; // 渐变范围
+const CGFloat alphaOffset = 200; //渐变偏移量---划过offset高度后导航栏开始渐变
+const CGFloat alphaLimit = 100; // 渐变比例---每滑过1高度导航栏渐变 1/limit
 @implementation ViewController
 
 - (void)viewDidLoad {
@@ -29,6 +30,10 @@ const CGFloat limit = 100; // 渐变范围
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.backgroundColor = [UIColor yellowColor];
+    
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 300)];
+    header.backgroundColor = [UIColor darkGrayColor];
+    _tableView.tableHeaderView = header;
     [self.view addSubview:_tableView];
     
     self.view.backgroundColor = [UIColor grayColor];
@@ -52,8 +57,12 @@ const CGFloat limit = 100; // 渐变范围
 
 // 界面滑动时导航栏随偏移量 实时变化
 - (void)setNavigationBarColorWithOffsetY:(CGFloat)offsetY {
-    CGFloat alpha = offsetY / limit;
-    self.navAlpha = alpha > 1 ? 1 : alpha;
+    CGFloat s = offsetY - alphaOffset;
+    if (s > 0) {
+        self.navAlpha = s/alphaLimit > 1 ? 1 : s/alphaLimit;
+    }else {
+        self.navAlpha = 0;
+    }
 }
 
 
@@ -73,15 +82,43 @@ const CGFloat limit = 100; // 渐变范围
         view.backgroundColor = [UIColor blackColor];
         [cell addSubview:view];
         
-        UIView *view1 = [[UILabel alloc] initWithFrame:CGRectMake(100, 50, 50, 30)];
+        UIView *view1 = [[UILabel alloc] initWithFrame:CGRectMake(150, 50, 50, 30)];
         view1.backgroundColor = [UIColor redColor];
         [cell addSubview:view1];
+        
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = CGRectMake(200, 8, 90, 40);
+        btn.backgroundColor = [UIColor grayColor];
+        [btn setTitle:@"popTovc" forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:btn];
+        
+        UIButton *root = [UIButton buttonWithType:UIButtonTypeCustom];
+        root.frame = CGRectMake(200, 56, 90, 40);
+        root.backgroundColor = [UIColor grayColor];
+        [root setTitle:@"popToRoot" forState:UIControlStateNormal];
+        [root addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:root];
     }
     cell.textLabel.text = @(indexPath.row).stringValue;
     
     return cell;
 }
 
+- (void)back:(UIButton *)btn {
+    if ([btn.titleLabel.text isEqualToString:@"popToRoot"]) {
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        
+    }else {
+        
+        NSInteger count = self.navigationController.viewControllers.count;
+        if (count >= 3) {
+            UIViewController *vc = self.navigationController.viewControllers[count - 3];
+            [self.navigationController popToViewController:vc animated:YES];
+        }
+    }
+}
 
 #pragma mark --- UITableViewDelegate
 
