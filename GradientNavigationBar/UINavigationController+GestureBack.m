@@ -7,45 +7,34 @@
 //
 
 #import "UINavigationController+GestureBack.h"
-#import "UIViewController+alpha.h"
 #import "NSObject+Runtime.h"
 #import <objc/runtime.h>
 
-//@interface UINavigationController ()<UIViewControllerContextTransitioning>
-
-//@end
-
 @implementation UINavigationController (GestureBack)
 
-//+ (void)initialize {
-
-//    if ([self class] == [UINavigationController class]) {
-//        
-//    }
-//}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    NSArray *arr = @[@"_updateInteractiveTransition:", @"_cancelInteractiveTransition:transitionContext:", @"_finishInteractiveTransition:transitionContext:"];
-    for (int i = 0; i < arr.count; i++) {
-        
-        NSString *mySel = [[NSString stringWithFormat:@"yhh_%@", arr[i]] stringByReplacingOccurrencesOfString:@"__" withString:@"_"];;
-        Method sysMethod = class_getInstanceMethod([self class], NSSelectorFromString(arr[i]));
-        Method myMethod = class_getInstanceMethod([self class], NSSelectorFromString(mySel));
-        method_exchangeImplementations(sysMethod, myMethod);
++ (void)initialize {
+    if (self == [UINavigationController class]) {
+        // 实现方法交换
+        NSArray *arr = @[@"_updateInteractiveTransition:", @"_cancelInteractiveTransition:transitionContext:", @"_finishInteractiveTransition:transitionContext:"];
+        for (int i = 0; i < arr.count; i++) {
+            NSString *mySel = [NSString stringWithFormat:@"yhh%@", arr[i]];
+            NSLog(@"%@",mySel);
+            Method sysMethod = class_getInstanceMethod([self class], NSSelectorFromString(arr[i]));
+            Method myMethod = class_getInstanceMethod([self class], NSSelectorFromString(mySel));
+            method_exchangeImplementations(sysMethod, myMethod);
+        }
     }
 }
 
 // 侧滑返回实时更新导航栏透明
 - (void)yhh_updateInteractiveTransition:(CGFloat)percentComplete {
-    NSLog(@"%f", percentComplete);
+//    NSLog(@"%f", percentComplete);
     UIViewController *topvc = self.topViewController;
     
     id <UIViewControllerTransitionCoordinator> tran = topvc.transitionCoordinator;
+    
     UIViewController *fromvc = [tran viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIViewController *tovc = [tran viewControllerForKey:UITransitionContextToViewControllerKey];
-    NSLog(@"fromvc:%f  -----tovc:%f", fromvc.navAlpha, tovc.navAlpha);
     
     CGFloat alpha = fromvc.navAlpha - (fromvc.navAlpha - tovc.navAlpha) * percentComplete;
     [self setNavigationBarAlpha:alpha];
@@ -59,7 +48,7 @@
 //    NSLog(@"%@", [[context superclass] getAllProperties]);
 //    NSLog(@"%f-%f--%@", percentComplete, [[context valueForKey:@"_duration"] floatValue], NSStringFromClass([context class]));
     
-    [UIView animateWithDuration:[[context valueForKey:@"_duration"] floatValue] animations:^{
+    [UIView animateWithDuration:[[context valueForKey:@"_duration"] floatValue]*percentComplete animations:^{
         [self setNavigationBarAlpha:fromvc.navAlpha];
     }];
     [self yhh_cancelInteractiveTransition:percentComplete transitionContext:context];
@@ -69,7 +58,7 @@
 - (void)yhh_finishInteractiveTransition:(CGFloat)percentComplete transitionContext:(id)context {
     UIViewController *tovc = [context viewControllerForKey:UITransitionContextToViewControllerKey];
     
-    [UIView animateWithDuration:[[context valueForKey:@"_duration"] floatValue] animations:^{
+    [UIView animateWithDuration:[[context valueForKey:@"_duration"] floatValue] *(1-percentComplete) animations:^{
         [self setNavigationBarAlpha:tovc.navAlpha];
     }];
     [self yhh_finishInteractiveTransition:percentComplete transitionContext:context];
@@ -77,7 +66,7 @@
 
 - (void)setNavigationBarAlpha:(CGFloat)alpha {
     UIView *backView = self.navigationBar.subviews[0];
-    NSLog(@"%s, %f", __func__, alpha);
+    
     UIView *shadow = [backView valueForKey:@"_shadowView"];
     if (shadow) {
         shadow.alpha = alpha;
@@ -88,4 +77,24 @@
         effectView.alpha = alpha;
     }
 }
+
+@end
+
+
+
+@implementation UIViewController (alpha)
+
+static NSString *alphaKey = @"alphaKey";
+@dynamic navAlpha;
+
+- (CGFloat)navAlpha {
+    CGFloat alpha = [objc_getAssociatedObject(self, &alphaKey) floatValue];
+    return alpha;
+}
+
+- (void)setNavAlpha:(CGFloat)navAlpha {
+    objc_setAssociatedObject(self, &alphaKey, @(navAlpha), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self.navigationController setNavigationBarAlpha:navAlpha];
+}
+
 @end

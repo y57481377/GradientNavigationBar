@@ -20,29 +20,19 @@
         
         SEL name = method_getName(method);
         unsigned int params = method_getNumberOfArguments(method);
-        
         const char *encode = method_getTypeEncoding(method);
-        
-        char type;
-        size_t len = 0;
-        method_getReturnType(method, &type, len);
-        
         const char *name_c = sel_getName(name);
         
-        
-        NSString *str = [NSString stringWithFormat:@"方法名：%s, 参数个数:%d, 返回类型：%c, 参数类型: %s", name_c, params, type, encode];
+        NSString *str = [NSString stringWithFormat:@"方法名：%s, 参数个数:%d, 参数类型: %s", name_c, params, encode];
         [methodArray addObject:str];
     }
-    
     free(list);
-    
     return methodArray;
 }
 
 - (NSArray *)getAllProperties
 {
     unsigned int count = 0;
-    //获取属性的链表
     objc_property_t *properties  =class_copyPropertyList([self class], &count);
     
     NSMutableArray *propertiesArray = [NSMutableArray arrayWithCapacity:count];
@@ -53,9 +43,7 @@
         const char* propertyName =property_getName(property);
         [propertiesArray addObject: [NSString stringWithUTF8String:propertyName]];
     }
-    
     free(properties);
-    
     return propertiesArray;
 }
 
@@ -76,6 +64,7 @@
         
         [ivarArray addObject:str];
     }
+    free(ivars);
     return ivarArray;
 }
 @end

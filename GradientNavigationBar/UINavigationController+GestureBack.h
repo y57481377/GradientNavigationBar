@@ -11,3 +11,11 @@
 @interface UINavigationController (GestureBack)
 
 @end
+
+
+
+@interface UIViewController (alpha)
+// 记录当前控制器导航栏的alpha值
+@property (assign, nonatomic) CGFloat navAlpha;
+
+@end

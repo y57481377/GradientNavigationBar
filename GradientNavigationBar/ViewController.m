@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "UIViewController+alpha.h"
+#import "UINavigationController+GestureBack.h"
 
 @interface ViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) UITableView *tableView;
@@ -41,21 +41,8 @@ const CGFloat limit = 100; // 渐变范围
 }
 
 /**
- 渐变代码
+ *渐变代码
  */
-
-//- (void)viewWillAppear:(BOOL)animated {
-//    [super viewWillAppear:animated];
-//    self.navigationController.navigationBar.translucent = YES;
-//    [self setNavigationBarColorWithOffsetY:self.tableView.contentOffset.y];
-//}
-
-//- (void)viewWillDisappear:(BOOL)animated {
-//    [super viewWillDisappear:animated];
-////     设置导航栏 为不透明
-//    self.navigationController.navigationBar.subviews[0].alpha = 1.0;
-//}
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView == self.tableView) {
         CGFloat offsetY = scrollView.contentOffset.y;
@@ -65,17 +52,8 @@ const CGFloat limit = 100; // 渐变范围
 
 // 界面滑动时导航栏随偏移量 实时变化
 - (void)setNavigationBarColorWithOffsetY:(CGFloat)offsetY {
-//    UIImageView *backView = self.navigationController.navigationBar.subviews[0];
     CGFloat alpha = offsetY / limit;
-//    if (offsetY <= 0) {
-//        backView.alpha = 0;
-//    } else if (offsetY > 0 && offsetY < limit) {
-//        backView.alpha = alpha;
-//    } else if (offsetY >= limit ) {
-//        backView.alpha = 1;
-//    }
     self.navAlpha = alpha > 1 ? 1 : alpha;
-    NSLog(@"%s--%f", __func__, self.navAlpha);
 }
 
 
@@ -94,6 +72,10 @@ const CGFloat limit = 100; // 渐变范围
         UIView *view = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 50, 30)];
         view.backgroundColor = [UIColor blackColor];
         [cell addSubview:view];
+        
+        UIView *view1 = [[UILabel alloc] initWithFrame:CGRectMake(100, 50, 50, 30)];
+        view1.backgroundColor = [UIColor redColor];
+        [cell addSubview:view1];
     }
     cell.textLabel.text = @(indexPath.row).stringValue;
     
