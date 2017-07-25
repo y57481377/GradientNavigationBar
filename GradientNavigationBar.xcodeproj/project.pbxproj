@@ -18,7 +18,8 @@
 		2F8867781F1F9FB0006609F5 /* YHHNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8867771F1F9FB0006609F5 /* YHHNavigationController.m */; };
 		2F88677B1F1FAC2E006609F5 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F88677A1F1FAC2E006609F5 /* NSObject+Runtime.m */; };
 		2FCF05F61F204F410040B32B /* UINavigationController+GestureBack.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FCF05F51F204F410040B32B /* UINavigationController+GestureBack.m */; };
-		2FCF05FD1F20A6490040B32B /* NSDictionary+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FCF05FC1F20A6490040B32B /* NSDictionary+Log.m */; };
+		2FCF06001F259F850040B32B /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FCF05FF1F259F850040B32B /* MeViewController.m */; };
+		2FCF06041F25F0750040B32B /* NSDictionary+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FCF06031F25F0750040B32B /* NSDictionary+Log.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +62,9 @@
 		2F88677A1F1FAC2E006609F5 /* NSObject+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
 		2FCF05F41F204F410040B32B /* UINavigationController+GestureBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+GestureBack.h"; sourceTree = "<group>"; };
 		2FCF05F51F204F410040B32B /* UINavigationController+GestureBack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+GestureBack.m"; sourceTree = "<group>"; };
-		2FCF05FC1F20A6490040B32B /* NSDictionary+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Log.m"; sourceTree = "<group>"; };
+		2FCF05FE1F259F850040B32B /* MeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
+		2FCF05FF1F259F850040B32B /* MeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeViewController.m; sourceTree = "<group>"; };
+		2FCF06031F25F0750040B32B /* NSDictionary+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Log.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +123,8 @@
 				2F8867771F1F9FB0006609F5 /* YHHNavigationController.m */,
 				2F8867491F1F9DB0006609F5 /* ViewController.h */,
 				2F88674A1F1F9DB0006609F5 /* ViewController.m */,
+				2FCF05FE1F259F850040B32B /* MeViewController.h */,
+				2FCF05FF1F259F850040B32B /* MeViewController.m */,
 				2F88674C1F1F9DB0006609F5 /* Main.storyboard */,
 				2F88674F1F1F9DB0006609F5 /* Assets.xcassets */,
 				2F8867511F1F9DB0006609F5 /* LaunchScreen.storyboard */,
@@ -134,8 +139,8 @@
 		2F8867431F1F9DB0006609F5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				2FCF05FC1F20A6490040B32B /* NSDictionary+Log.m */,
 				2F8867441F1F9DB0006609F5 /* main.m */,
+				2FCF06031F25F0750040B32B /* NSDictionary+Log.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -293,11 +298,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F88674B1F1F9DB0006609F5 /* ViewController.m in Sources */,
-				2FCF05FD1F20A6490040B32B /* NSDictionary+Log.m in Sources */,
+				2FCF06041F25F0750040B32B /* NSDictionary+Log.m in Sources */,
 				2F88677B1F1FAC2E006609F5 /* NSObject+Runtime.m in Sources */,
 				2FCF05F61F204F410040B32B /* UINavigationController+GestureBack.m in Sources */,
 				2F8867781F1F9FB0006609F5 /* YHHNavigationController.m in Sources */,
 				2F8867481F1F9DB0006609F5 /* AppDelegate.m in Sources */,
+				2FCF06001F259F850040B32B /* MeViewController.m in Sources */,
 				2F8867451F1F9DB0006609F5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

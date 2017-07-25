@@ -11,7 +11,7 @@
 
 #import "NSObject+Runtime.h"
 
-@interface YHHNavigationController ()
+@interface YHHNavigationController ()<UIGestureRecognizerDelegate>
 
 @end
 
@@ -23,6 +23,34 @@
     
 //    NSArray *methodArr = [UINavigationController getAllMethods];
 //    NSLog(@"%@",methodArr);
+    self.interactivePopGestureRecognizer.delegate = self;
+}
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if (self.viewControllers.count >= 1) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setTitle:@"返回" forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+        [btn sizeToFit];
+//        btn.backgroundColor = [UIColor greenColor];
+        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    }
+    [super pushViewController:viewController animated:animated];
+}
+
+- (void)back {
+    [self popViewControllerAnimated:YES];
+}
+
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (self.viewControllers.count <= 1) {
+        return NO;
+    }
+    // 标记是侧滑返回
+    self.isGestureBack = YES;
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {

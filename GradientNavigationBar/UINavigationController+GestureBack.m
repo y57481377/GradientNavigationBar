@@ -18,7 +18,6 @@
         NSArray *arr = @[@"_updateInteractiveTransition:", @"_cancelInteractiveTransition:transitionContext:", @"_finishInteractiveTransition:transitionContext:", @"popViewControllerAnimated:", @"popToViewController:animated:", @"popToRootViewControllerAnimated:"];
         for (int i = 0; i < arr.count; i++) {
             NSString *mySel = [[NSString stringWithFormat:@"yhh_%@", arr[i]] stringByReplacingOccurrencesOfString:@"__" withString:@"_"];
-            NSLog(@"%@", mySel);
             Method sysMethod = class_getInstanceMethod([self class], NSSelectorFromString(arr[i]));
             Method myMethod = class_getInstanceMethod([self class], NSSelectorFromString(mySel));
             method_exchangeImplementations(sysMethod, myMethod);
@@ -81,30 +80,43 @@
 
 #pragma mark --- 系统pop事件
 - (UIViewController *)yhh_popViewControllerAnimated:(BOOL)animated {
-    // self.topViewController与pop方法返回的vc、tovc是同一个
+    // self.topViewController与tovc是同一个ViewController
     // 先执行pop方法，topvc.transitionCoordinator 才会有值
-    UIViewController *topvc = [self yhh_popViewControllerAnimated:animated];
-    [self animationWithDuration:topvc.transitionCoordinator.transitionDuration alpha:topvc.navAlpha];
+    UIViewController *popvc = [self yhh_popViewControllerAnimated:animated];
     
-    return topvc;
+    /**
+     此处通过isGestureBack标记判断：是否为侧滑返回
+     @isGestureBack : YES 是侧滑返回，不调用动画方法
+     @isGestureBack : NO  不是侧滑返回，调用过渡动画
+     
+     侧滑返回手势响应后会 先 调用 @selector(popViewControllerAnimated:),再调用@selector(_updateInteractiveTransition)如果在手势代理里面做此标记则会导致：如果设置了导航栏背景图片，侧滑过程中松开手指滑动距离不足屏幕一半时，导航栏会闪烁一下。
+     */
+    if (!self.isGestureBack) {
+        [self animationWithDuration:self.topViewController.transitionCoordinator.transitionDuration alpha:self.topViewController.navAlpha];
+    }
+    return popvc;
 }
 
 - (NSArray<UIViewController *> *)yhh_popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    // self.topViewController与参数viewController、tovc是同一个
-    // 先执行pop方法，topvc.transitionCoordinator 才会有值
     NSArray *array = [self yhh_popToViewController:viewController animated:animated];
-    [self animationWithDuration:viewController.transitionCoordinator.transitionDuration alpha:viewController.navAlpha];
+    
+    [self animationWithDuration:self.topViewController.transitionCoordinator.transitionDuration alpha:self.topViewController.navAlpha];
     return array;
 }
 
 - (NSArray<UIViewController *> *)yhh_popToRootViewControllerAnimated:(BOOL)animated {
     NSArray *array = [self yhh_popToRootViewControllerAnimated:animated];
     
-    UIViewController *topvc = self.topViewController;
-    [self animationWithDuration:topvc.transitionCoordinator.transitionDuration alpha:topvc.navAlpha];
+    [self animationWithDuration:self.topViewController.transitionCoordinator.transitionDuration alpha:self.topViewController.navAlpha];
     return array;
 }
 
+- (BOOL)yhh_gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (self.viewControllers.count > 1) {
+        self.isGestureBack = YES;
+    }
+    return [self yhh_gestureRecognizerShouldBegin:gestureRecognizer];
+}
 
 /**
  带动画的前往某一个界面
@@ -113,9 +125,12 @@
  @param alpha 将要跳转界面导航栏的alpha值
  */
 - (void)animationWithDuration:(CGFloat)duration alpha:(CGFloat)alpha {
+    
     [UIView animateWithDuration:duration animations:^{
         [self setNavigationBarAlpha:alpha];
     }];
+    // 完成动画后 取消标记。
+    self.isGestureBack = NO;
 }
 
 
@@ -132,6 +147,25 @@
     if (effectView) {
         effectView.alpha = alpha;
     }
+    
+    UIImageView *backgroundImageV = [backView valueForKey:@"_backgroundImageView"];
+    if (backgroundImageV.image) {
+        backView.alpha = alpha;
+    }
+}
+
+
+#pragma mark --- 运行时添加属性
+static NSString *gestureBackKey = @"gestureBack";
+@dynamic isGestureBack;
+
+- (BOOL)isGestureBack {
+    BOOL isGestureBack = [objc_getAssociatedObject(self, &gestureBackKey) boolValue];
+    return isGestureBack;
+}
+
+- (void)setIsGestureBack:(BOOL)isGestureBack {
+    objc_setAssociatedObject(self, &gestureBackKey, @(isGestureBack), OBJC_ASSOCIATION_ASSIGN);
 }
 
 @end
@@ -141,7 +175,9 @@
 @implementation UIViewController (alpha)
 
 static NSString *alphaKey = @"alphaKey";
+static NSString *alphaTrans = @"alphaTrans";
 @dynamic navAlpha;
+@dynamic navTranslucent;
 
 - (CGFloat)navAlpha {
     CGFloat alpha = [objc_getAssociatedObject(self, &alphaKey) floatValue];
@@ -149,8 +185,16 @@ static NSString *alphaKey = @"alphaKey";
 }
 
 - (void)setNavAlpha:(CGFloat)navAlpha {
-    objc_setAssociatedObject(self, &alphaKey, @(navAlpha), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &alphaKey, @(navAlpha), OBJC_ASSOCIATION_ASSIGN);
     [self.navigationController setNavigationBarAlpha:navAlpha];
 }
 
+- (BOOL)navTranslucent {
+    BOOL translucent = [objc_getAssociatedObject(self, &alphaTrans) boolValue];
+    return translucent;
+}
+
+- (void)setNavTranslucent:(BOOL)navTranslucent {
+    objc_setAssociatedObject(self, &alphaTrans, @(navTranslucent), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 @end
