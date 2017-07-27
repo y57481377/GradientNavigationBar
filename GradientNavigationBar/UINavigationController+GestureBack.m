@@ -10,6 +10,10 @@
 #import "NSObject+Runtime.h"
 #import <objc/runtime.h>
 
+@interface UINavigationController()<UIGestureRecognizerDelegate>
+
+@end
+
 @implementation UINavigationController (GestureBack)
 
 + (void)initialize {
@@ -111,12 +115,6 @@
     return array;
 }
 
-- (BOOL)yhh_gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    if (self.viewControllers.count > 1) {
-        self.isGestureBack = YES;
-    }
-    return [self yhh_gestureRecognizerShouldBegin:gestureRecognizer];
-}
 
 /**
  带动画的前往某一个界面
@@ -128,6 +126,9 @@
     
     [UIView animateWithDuration:duration animations:^{
         [self setNavigationBarAlpha:alpha];
+    }completion:^(BOOL finished) {
+        BOOL isTran = self.topViewController.navTranslucent;
+        self.navigationBar.translucent = isTran;
     }];
     // 完成动画后 取消标记。
     self.isGestureBack = NO;

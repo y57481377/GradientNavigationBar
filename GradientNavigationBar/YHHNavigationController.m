@@ -26,22 +26,11 @@
     self.interactivePopGestureRecognizer.delegate = self;
 }
 
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    if (self.viewControllers.count >= 1) {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setTitle:@"返回" forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-        [btn sizeToFit];
-//        btn.backgroundColor = [UIColor greenColor];
-        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    }
-    [super pushViewController:viewController animated:animated];
-}
-
-- (void)back {
-    [self popViewControllerAnimated:YES];
-}
+//- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+//}
+//- (void)back {
+//    [self popViewControllerAnimated:YES];
+//}
 
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
