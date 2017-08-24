@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F48F06D1F480890005B4D16 /* YHHNavigationTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F06C1F480890005B4D16 /* YHHNavigationTransition.m */; };
+		2F48F0711F48232D005B4D16 /* YHHTransitionAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F48F0701F48232D005B4D16 /* YHHTransitionAnimation.m */; };
 		2F8867451F1F9DB0006609F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8867441F1F9DB0006609F5 /* main.m */; };
 		2F8867481F1F9DB0006609F5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8867471F1F9DB0006609F5 /* AppDelegate.m */; };
 		2F88674B1F1F9DB0006609F5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F88674A1F1F9DB0006609F5 /* ViewController.m */; };
@@ -40,6 +42,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2F48F06B1F480890005B4D16 /* YHHNavigationTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHHNavigationTransition.h; sourceTree = "<group>"; };
+		2F48F06C1F480890005B4D16 /* YHHNavigationTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHHNavigationTransition.m; sourceTree = "<group>"; };
+		2F48F06F1F48232D005B4D16 /* YHHTransitionAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHHTransitionAnimation.h; sourceTree = "<group>"; };
+		2F48F0701F48232D005B4D16 /* YHHTransitionAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHHTransitionAnimation.m; sourceTree = "<group>"; };
 		2F8867401F1F9DB0006609F5 /* GradientNavigationBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradientNavigationBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F8867441F1F9DB0006609F5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2F8867461F1F9DB0006609F5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -92,6 +98,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F48F06E1F4822FA005B4D16 /* TransitionAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				2F48F06B1F480890005B4D16 /* YHHNavigationTransition.h */,
+				2F48F06C1F480890005B4D16 /* YHHNavigationTransition.m */,
+				2F48F06F1F48232D005B4D16 /* YHHTransitionAnimation.h */,
+				2F48F0701F48232D005B4D16 /* YHHTransitionAnimation.m */,
+			);
+			name = TransitionAnimation;
+			sourceTree = "<group>";
+		};
 		2F8867371F1F9DB0006609F5 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +138,7 @@
 				2FCF05F51F204F410040B32B /* UINavigationController+GestureBack.m */,
 				2F8867761F1F9FB0006609F5 /* YHHNavigationController.h */,
 				2F8867771F1F9FB0006609F5 /* YHHNavigationController.m */,
+				2F48F06E1F4822FA005B4D16 /* TransitionAnimation */,
 				2F8867491F1F9DB0006609F5 /* ViewController.h */,
 				2F88674A1F1F9DB0006609F5 /* ViewController.m */,
 				2FCF05FE1F259F850040B32B /* MeViewController.h */,
@@ -300,7 +318,9 @@
 				2F88674B1F1F9DB0006609F5 /* ViewController.m in Sources */,
 				2FCF06041F25F0750040B32B /* NSDictionary+Log.m in Sources */,
 				2F88677B1F1FAC2E006609F5 /* NSObject+Runtime.m in Sources */,
+				2F48F06D1F480890005B4D16 /* YHHNavigationTransition.m in Sources */,
 				2FCF05F61F204F410040B32B /* UINavigationController+GestureBack.m in Sources */,
+				2F48F0711F48232D005B4D16 /* YHHTransitionAnimation.m in Sources */,
 				2F8867781F1F9FB0006609F5 /* YHHNavigationController.m in Sources */,
 				2F8867481F1F9DB0006609F5 /* AppDelegate.m in Sources */,
 				2FCF06001F259F850040B32B /* MeViewController.m in Sources */,

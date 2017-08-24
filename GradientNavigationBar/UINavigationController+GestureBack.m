@@ -46,6 +46,7 @@
     
     CGFloat alpha = fromvc.navAlpha - (fromvc.navAlpha - tovc.navAlpha) * percentComplete;
     [self setNavigationBarAlpha:alpha];
+    
     [self yhh_updateInteractiveTransition:percentComplete];
 }
 

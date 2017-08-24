@@ -33,10 +33,10 @@ const CGFloat alphaLimit = 100; // 渐变比例---每滑过1高度导航栏渐�
     _tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].bounds style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
-    _tableView.backgroundColor = [UIColor yellowColor];
+    _tableView.backgroundColor = [UIColor clearColor];
     
     UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 300)];
-    header.backgroundColor = [UIColor darkGrayColor];
+    header.backgroundColor = [UIColor clearColor];
     _tableView.tableHeaderView = header;
     [self.view addSubview:_tableView];
     
